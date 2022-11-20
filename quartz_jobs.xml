@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains job definitions in schema version 2.0 format -->
+
+<job-scheduling-data xmlns="http://quartznet.sourceforge.net/JobSchedulingData" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0">
+
+	<processing-directives>
+		<overwrite-existing-data>true</overwrite-existing-data>
+	</processing-directives>
+
+	<schedule>
+
+		<job>
+			<name>sampleJob</name>
+			<group>sampleGroup</group>
+			<description>Sample job for Quartz Server</description>
+			<job-type>TopshelfConsole.TestJob, TopshelfConsole</job-type>
+			<durable>true</durable>
+			<recover>false</recover>
+			<!--<job-data-map>
+        <entry>
+          <key>key1</key>
+          <value>value1</value>
+        </entry>
+        <entry>
+          <key>key2</key>
+          <value>value2</value>
+        </entry>
+      </job-data-map>-->
+		</job>
+		<!--当仅需触发一次或者以固定时间间隔周期执行，SimpleTrigger是最适合的选择-->
+		<!--<trigger>
+      <simple>
+        <name>sampleSimpleTrigger</name>
+        <group>sampleSimpleGroup</group>
+        <description>Simple trigger to simply fire sample job</description>
+        <job-name>sampleJob</job-name>
+        <job-group>sampleGroup</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>10000</repeat-interval>
+      </simple>
+    </trigger>-->
+		<!--通过Cron表达式定义出各种复杂时间规则的调度方案：如每早晨9:00执行，周一、周三、周五下午5:00执行等-->
+		<trigger>
+			<cron>
+				<name>sampleCronTrigger</name>
+				<group>sampleCronGroup</group>
+				<description>Cron trigger to simply fire sample job</description>
+				<job-name>sampleJob</job-name>
+				<job-group>sampleGroup</job-group>
+				<misfire-instruction>SmartPolicy</misfire-instruction>
+				<cron-expression>0/10 * * * * ?</cron-expression>
+			</cron>
+		</trigger>
+		<!--quartz.Calendar它是一些日历特定时间点的集合，一个Trigger可以和多个Calendar关联，以便排除或包含某些时间点。
+    假设，我们安排每周星期一早上10:00执行任务，但是如果碰到法定的节日，任务则不执行，这时就需要在Trigger触发机制的基础上使用Calendar进行定点排除-->
+		<!--<trigger>
+      <calendar-interval>
+        <name>sampleCalendarIntervalTrigger</name>
+        <group>sampleCalendarIntervalGroup</group>
+        <description>Calendar interval trigger to simply fire sample job</description>
+        <job-name>sampleJob</job-name>
+        <job-group>sampleGroup</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-interval>15</repeat-interval>
+        <repeat-interval-unit>Second</repeat-interval-unit>
+      </calendar-interval>
+    </trigger>-->
+	</schedule>
+</job-scheduling-data>
